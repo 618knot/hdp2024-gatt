@@ -1,1 +1,4 @@
-pybleno==0.11
+bluezero==0.9.0
+dbus-python==1.3.2
+pycairo==1.27.0
+PyGObject==3.50.0
