@@ -66,22 +66,22 @@ def main():
         my_peripheral = peripheral.Peripheral(adapter_address, local_name='MyPeripheral')
 
         # サービスの追加
-        my_service = my_peripheral.add_service(SERVICE_UUID)
+        my_peripheral.add_service(1, SERVICE_UUID, True)
 
         # 特性の追加
-        my_char = my_peripheral.add_characteristic(SERVICE_UUID, CHAR_UUID,
-                                                   value=my_value,
-                                                   notifying=False,
-                                                   flags=['read', 'write'],
-                                                   read_callback=char_read,
-                                                   write_callback=char_write)
+        my_peripheral.add_characteristic(
+            srv_id=1,
+            chr_id=1,
+            uuid=SERVICE_UUID,
+            value=my_value,
+            notifying=False,
+            flags=['read', 'write'],
+            read_callback=char_read,
+            write_callback=char_write)
 
         # アドバタイジングの開始
-        my_peripheral.add_advertise_service(SERVICE_UUID)
-        my_peripheral.start()
+        my_peripheral.publish()
 
-        # メインループ
-        my_peripheral.wait()
     except dbus.exceptions.DBusException as e:
         logging.error(f"DBus error: {e}")
         logging.info("Please check if bluetoothd is running and you have the necessary permissions.")
@@ -89,7 +89,7 @@ def main():
         logging.error(f"Unexpected error: {e}")
     finally:
         if 'my_peripheral' in locals():
-            my_peripheral.stop()
+            print("stop")
 
 if __name__ == "__main__":
     main()
