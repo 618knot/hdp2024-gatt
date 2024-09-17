@@ -28,11 +28,11 @@ class Joystick:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup([X_PIN, Y_PIN], GPIO.IN)
         
-    def get_values():
+    def get_values(self):
         input_x = GPIO.input(X_PIN)
         input_y = GPIO.input(Y_PIN)
         
         return { "x": input_x, "y": input_y }
 
-    def cleanup():
+    def cleanup(self):
         GPIO.cleanup()
