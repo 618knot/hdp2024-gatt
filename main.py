@@ -6,6 +6,7 @@ import logging
 from bluezero import peripheral
 from bluezero import adapter
 import subprocess
+import json
 
 # ロギングの設定
 logging.basicConfig(level=logging.DEBUG)
@@ -15,7 +16,8 @@ SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
 CHAR_UUID = '12345678-1234-5678-1234-56789abcdef1'
 
 # 特性の初期値
-my_value = bytearray([0x00])
+my_divt = { "message": "hello" }
+my_value = bytearray(json.dumps(my_divt), "utf-8")
 
 # コールバック関数
 def char_read(value):
@@ -69,10 +71,10 @@ def main():
         my_peripheral.add_service(1, SERVICE_UUID, True)
 
         # 特性の追加
-        my_peripheral.add_characteristic(
+        my_peripheral.add_characteristic( 
             srv_id=1,
             chr_id=1,
-            uuid=SERVICE_UUID,
+            uuid=CHAR_UUID,
             value=my_value,
             notifying=False,
             flags=['read', 'write'],
