@@ -15,19 +15,27 @@ logging.basicConfig(level=logging.DEBUG)
 SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
 CHAR_UUID = '12345678-1234-5678-1234-56789abcdef1'
 
-# 特性の初期値
-my_divt = { "message": "hello" }
-my_value = bytearray(json.dumps(my_divt), "utf-8")
 
 # コールバック関数
 def char_read(value):
     logging.debug('Characteristic read: {}'.format(value))
-    return my_value
+    global rotation_json, ex_val
+    ex_val += 1
+    rotation_json = json_str(ex_val, ex_val)
+    return rotation_json
+
+def json_str(x, y):
+    dict_val = { "x": x, "y": y }
+    return bytearray(json.dumps(dict_val), "utf-8")
+
+ex_val = 0
+# 特性の初期値
+rotation_json = json_str(ex_val, ex_val)
 
 def char_write(value):
-    global my_value
+    global rotation_json
     logging.debug('Characteristic write: {}'.format(value))
-    my_value = value
+    rotation_json = value
 
 # システム情報を取得
 def get_system_info():
@@ -75,7 +83,7 @@ def main():
             srv_id=1,
             chr_id=1,
             uuid=CHAR_UUID,
-            value=my_value,
+            value=rotation_json,
             notifying=False,
             flags=['read', 'write'],
             read_callback=char_read,
