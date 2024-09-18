@@ -7,6 +7,7 @@ from bluezero import peripheral
 from bluezero import adapter
 import subprocess
 import json
+from joystick import Joystick
 
 # ロギングの設定
 logging.basicConfig(level=logging.DEBUG)
@@ -15,22 +16,20 @@ logging.basicConfig(level=logging.DEBUG)
 SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
 CHAR_UUID = '12345678-1234-5678-1234-56789abcdef1'
 
+joystick = Joystick()
 
 # コールバック関数
 def char_read(value):
     logging.debug('Characteristic read: {}'.format(value))
-    global rotation_json, ex_val
-    ex_val += 1
-    rotation_json = json_str(ex_val, ex_val)
+    global rotation_json
+    rotation_json = json_str(joystick.get_values())
     return rotation_json
 
-def json_str(x, y):
-    dict_val = { "x": x, "y": y }
+def json_str(dict_val: dict):
     return bytearray(json.dumps(dict_val), "utf-8")
 
-ex_val = 0
 # 特性の初期値
-rotation_json = json_str(ex_val, ex_val)
+rotation_json = json_str(joystick.get_values())
 
 def char_write(value):
     global rotation_json
@@ -98,8 +97,8 @@ def main():
     except Exception as e:
         logging.error(f"Unexpected error: {e}")
     finally:
-        if 'my_peripheral' in locals():
-            print("stop")
+        joystick.cleanup()
+        print("stop")
 
 if __name__ == "__main__":
     main()
