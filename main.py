@@ -12,9 +12,11 @@ from joystick import Joystick
 # ロギングの設定
 logging.basicConfig(level=logging.DEBUG)
 
+DEVICE_NAME = "namekawa"
+
 # UUIDの定義
-SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
-CHAR_UUID = '12345678-1234-5678-1234-56789abcdef1'
+SERVICE_UUID = '96a3093b-708c-4abd-97d2-9d8b10c122ec'
+CHAR_UUID = '206ff6bf-5f3e-4c9e-902f-b7762595ddd8'
 
 joystick = Joystick()
 
@@ -72,7 +74,7 @@ def main():
 
     try:
         # Peripheral の設定
-        my_peripheral = peripheral.Peripheral(adapter_address, local_name='MyPeripheral')
+        my_peripheral = peripheral.Peripheral(adapter_address, local_name=f'hdp2024-{DEVICE_NAME}')
 
         # サービスの追加
         my_peripheral.add_service(1, SERVICE_UUID, True)
