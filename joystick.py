@@ -1,38 +1,18 @@
-import RPi.GPIO as GPIO
-
-
-
-X_PIN = 20
-Y_PIN = 21
-
-
-
-# テスト用。後で消す
-# from time import sleep
-# try:
-#     while True:
-#         input_x = GPIO.input(X_PIN)
-#         input_y = GPIO.input(Y_PIN)
-#         print(f"x: {input_x}, y: {input_y}")
-#         sleep(1)
-# except:
-#     GPIO.cleanup()
-#     print("stop")
+from gpiozero import MCP3008
 
 class Joystick:
-    # default values
-    input_x = 0
-    input_y = 0
-    
-    def __init__(self) -> None:
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup([X_PIN, Y_PIN], GPIO.IN)
+    def __init__(self, x_ch = 1, y_ch = 0) -> None:
+        self.x_ch = x_ch
+        self.y_ch = y_ch
         
     def get_values(self):
-        input_x = GPIO.input(X_PIN)
-        input_y = GPIO.input(Y_PIN)
+        input_x = self.__analog_read(self.x_ch)
+        input_y = self.__analog_read(self.y_ch)
         
         return { "x": input_x, "y": input_y }
 
-    def cleanup(self):
-        GPIO.cleanup()
+    def __analog_read(channel):
+        pot = MCP3008(channel)
+        value = pot.value
+        
+        return value
