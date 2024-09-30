@@ -11,7 +11,7 @@ class Joystick:
         
         return { "x": input_x, "y": input_y }
 
-    def __analog_read(channel):
+    def __analog_read(self, channel):
         pot = MCP3008(channel)
         value = pot.value
         
