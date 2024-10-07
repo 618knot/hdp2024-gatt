@@ -1,9 +1,10 @@
-from gpiozero import MCP3008
+import mcp3008
 
 class Joystick:
-    def __init__(self, x_ch = 1, y_ch = 0) -> None:
-        self.x_ch = x_ch
-        self.y_ch = y_ch
+    def __init__(self) -> None:
+        self.x_ch = mcp3008.CH1
+        self.y_ch = mcp3008.CH0
+        self.adc = mcp3008.MCP3008()
         
     def get_values(self):
         input_x = self.__analog_read(self.x_ch)
@@ -11,8 +12,10 @@ class Joystick:
         
         return { "x": input_x, "y": input_y }
 
+    def close(self):
+        self.adc.close()
+
     def __analog_read(self, channel):
-        pot = MCP3008(channel)
-        value = pot.value
+        value = self.adc.read([channel])
         
-        return value
+        return value.pop() / 1024
