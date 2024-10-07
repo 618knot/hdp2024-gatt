@@ -96,6 +96,7 @@ def main():
     except Exception as e:
         logging.error(f"Unexpected error: {e}")
     finally:
+        joystick.close()
         print("stop")
 
 if __name__ == "__main__":
