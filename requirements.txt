@@ -1,7 +1,6 @@
 bluezero==0.9.0
 colorzero==2.0
 dbus-python==1.3.2
-gpiozero==2.0.1
-pycairo==1.27.0
-PyGObject==3.50.0
-RPi.GPIO==0.7.1
+lgpio==0.2.2.0
+mcp3008==1.0.1
+spidev==3.6
