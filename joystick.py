@@ -18,4 +18,4 @@ class Joystick:
     def __analog_read(self, channel):
         value = self.adc.read([channel])
         
-        return value.pop() / 1024
+        return value.pop() / 1023
