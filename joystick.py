@@ -16,6 +16,19 @@ class Joystick:
         self.adc.close()
 
     def __analog_read(self, channel):
+        """doc
+        MCP3008にあったアナログ入力を取得するメソッド
+        ※MCP3008の分解能は10bit
+
+        Args:
+            channel (int): MCP3008のチャンネル。mcp3008からCH名を呼び出せる ex) mcp3008.CH0 -> 8
+
+        Var:
+            value (list): 長さ1のリスト。リストの中身は0~1023の値
+
+        Returns:
+            float: valueを0~1の値で表現したもの
+        """
         value = self.adc.read([channel])
         
-        return value.pop() / 1023
+        return # write your code here.
