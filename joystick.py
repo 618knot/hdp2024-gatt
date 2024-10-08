@@ -32,3 +32,15 @@ class Joystick:
         value = self.adc.read([channel])
         
         return # write your code here.
+
+if __name__ == "__main__":
+    import time
+    j = Joystick()
+
+    try:
+        while True:
+            print(j.get_values())
+            time.sleep(1)
+    finally:
+        j.close()    
+        
