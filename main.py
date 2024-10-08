@@ -9,7 +9,7 @@ from joystick import Joystick
 # ロギングの設定
 logging.basicConfig(level=logging.DEBUG)
 
-DEVICE_NAME = "namekawa"
+DEVICE_NAME = "" # 好きなデバイス名を入力する
 
 # UUIDの定義
 SERVICE_UUID = '96a3093b-708c-4abd-97d2-9d8b10c122ec'
@@ -29,11 +29,6 @@ def json_str(dict_val: dict):
 
 # 特性の初期値
 rotation_json = json_str(joystick.get_values())
-
-def char_write(value):
-    global rotation_json
-    logging.debug('Characteristic write: {}'.format(value))
-    rotation_json = value
 
 # システム情報を取得
 def get_system_info():
@@ -73,19 +68,11 @@ def main():
         # Peripheral の設定
         my_peripheral = peripheral.Peripheral(adapter_address, local_name=f'hdp2024-{DEVICE_NAME}')
 
-        # サービスの追加
-        my_peripheral.add_service(1, SERVICE_UUID, True)
+        # Serviceの追加
+        # write your code here.
 
-        # 特性の追加
-        my_peripheral.add_characteristic( 
-            srv_id=1,
-            chr_id=1,
-            uuid=CHAR_UUID,
-            value=rotation_json,
-            notifying=False,
-            flags=['read', 'write'],
-            read_callback=char_read,
-            write_callback=char_write)
+        # Characteristicの追加
+        # write your code here.
 
         # アドバタイジングの開始
         my_peripheral.publish()
