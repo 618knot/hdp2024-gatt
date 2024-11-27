@@ -9,7 +9,7 @@ from joystick import Joystick
 # ロギングの設定
 logging.basicConfig(level=logging.DEBUG)
 
-DEVICE_NAME = "namekawa"
+DEVICE_NAME = ""
 
 # UUIDの定義
 SERVICE_UUID = '96a3093b-708c-4abd-97d2-9d8b10c122ec'
